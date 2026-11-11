@@ -68,7 +68,7 @@ const details={SOUR:'The debut that made a whole generation put their feelings i
   const url=window.ORACLE_SUPABASE_URL,key=window.ORACLE_SUPABASE_ANON_KEY;if(url&&key&&window.supabase?.createClient){supabase=window.supabase.createClient(url,key);supabase.auth.getSession().then(({data})=>setAccount(data.session?.user||null));supabase.auth.onAuthStateChange((event,session)=>{if(event==='SIGNED_IN'){setAccount(session?.user||null);modal.classList.remove('open')}if(event==='SIGNED_OUT')setAccount(null)})}else{document.querySelector('#playlistHint').textContent='Accounts need a Supabase project before email sign-up can go live.'}
   if(window.ORACLE_GITHUB_URL){const a=document.createElement('a');a.href=window.ORACLE_GITHUB_URL;a.target='_blank';a.rel='noreferrer';a.textContent='view the source on GitHub ↗';a.className='github-link';document.querySelector('.footer').append(a)}
 })();
-</script></body></html><script src="./account.js"></script>
+</script></body></html><script src="./account.js?v=dashboard-restore-2"></script>
 
 <
 
