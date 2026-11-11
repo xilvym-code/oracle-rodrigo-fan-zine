@@ -44,3 +44,20 @@
     actions.prepend(play);
   });
 })();
+
+
+(function(){
+  const addPlayLinks=()=>document.querySelectorAll('#songList button[aria-label^="Save "]').forEach(save=>{
+    if(save.parentElement.querySelector('[data-play-track]'))return;
+    const title=save.getAttribute('aria-label').replace(/^Save\s+|\s+as a favorite$/g,'');
+    const link=document.createElement('a');
+    link.className='tiny-button';link.dataset.playTrack='';link.textContent='▶ play ↗';
+    link.href='https://music.youtube.com/search?q='+encodeURIComponent('Olivia Rodrigo '+title+' official audio');
+    link.target='_blank';link.rel='noopener noreferrer';link.setAttribute('aria-label','Play '+title+' on YouTube Music');
+    link.style.cssText='display:inline-flex;align-items:center;margin:6px;text-decoration:none';
+    save.insertAdjacentElement('afterend',link);
+  });
+  addPlayLinks();
+  const list=document.querySelector('#songList');
+  if(list)new MutationObserver(addPlayLinks).observe(list,{childList:true,subtree:true});
+})();
