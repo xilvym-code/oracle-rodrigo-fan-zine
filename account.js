@@ -61,3 +61,13 @@
   const list=document.querySelector('#songList');
   if(list)new MutationObserver(addPlayLinks).observe(list,{childList:true,subtree:true});
 })();
+
+
+(function(){
+  const list=document.querySelector('#songList');
+  if(!list||document.querySelector('.song-video-feature'))return;
+  const style=document.createElement('style');
+  style.textContent='.song-video-feature{display:grid;grid-template-columns:minmax(220px,.8fr) minmax(0,1.2fr);align-items:center;gap:clamp(22px,5vw,64px);margin:12px 0 34px;padding:clamp(18px,3vw,32px);background:var(--paper);border:1px solid var(--line);box-shadow:8px 8px 0 var(--pink)}.song-video-feature h3{font:600 clamp(28px,4vw,46px)/1 var(--serif);margin:10px 0}.song-video-feature p{font:11px/1.7 var(--mono);color:#65574f}.song-video-feature video{display:block;width:100%;max-height:440px;aspect-ratio:16/9;object-fit:contain;background:#171313;border:1px solid var(--line)}@media(max-width:720px){.song-video-feature{grid-template-columns:1fr;gap:16px}}';
+  document.head.append(style);
+  list.insertAdjacentHTML('beforebegin',`<section class="song-video-feature" aria-labelledby="songVideoTitle"><div><div class="label">featured song · watch & listen</div><h3 id="songVideoTitle">Listen to Olivia’s Trending Song <span aria-hidden="true">✨</span></h3><p>Press play to watch the video right here in the songs area.</p></div><video controls playsinline preload="metadata" aria-label="Listen to Olivia’s Trending Song"><source src="./videos/YTDown.com_Shorts_Media_k_YZCqSDb0E_the-cure-olivia-rodrigo_002_720p.mp4" type="video/mp4">Your browser does not support video playback.</video></section>`);
+})();
