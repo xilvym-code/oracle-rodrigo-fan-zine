@@ -71,3 +71,37 @@
   document.head.append(style);
   list.insertAdjacentHTML('beforebegin',`<section class="song-video-feature" aria-labelledby="songVideoTitle"><div><div class="label">featured song · watch & listen</div><h3 id="songVideoTitle">Listen to Olivia’s Trending Song <span aria-hidden="true">✨</span></h3><p>Press play to watch the video right here in the songs area.</p></div><video controls playsinline preload="metadata" aria-label="Listen to Olivia’s Trending Song"><source src="./videos/YTDown.com_Shorts_Media_k_YZCqSDb0E_the-cure-olivia-rodrigo_002_720p.mp4" type="video/mp4">Your browser does not support video playback.</video></section>`);
 })();
+
+
+(function(){
+  const list=document.querySelector('#songList'),feature=document.querySelector('.song-video-feature');
+  if(!list||!feature)return;
+  const ids={'drivers-license':'ZmDBbnmKpqQ','deja-vu':'cii6ruuycQA','good-4-u':'gNi_6U5Pm_o','traitor':'CRrf3h9vhp8','brutal':'OGUy2UmRxJ0','vampire':'RlPNh_PBZb4','bad-idea-right':'zla_eLVFiDU','get-him-back':'ZsJ-BHohXRI','making-the-bed':'OuuBnf2aGCc','obsessed':'QXcjPySjdJU','drop-dead':'78wrful9cVU','cigarette-smoke':'mA9HZEJfmGw'};
+  const source='./videos/YTDown.com_Shorts_Media_k_YZCqSDb0E_the-cure-olivia-rodrigo_002_720p.mp4';
+  const style=document.createElement('style');
+  style.textContent='.song-video-feature #inlineSongPlayer{display:block;width:100%;height:auto;max-height:440px;aspect-ratio:16/9;object-fit:contain;background:#171313;border:1px solid var(--line)}.song-video-feature iframe#inlineSongPlayer{min-height:260px;max-height:none}@media(max-width:720px){.song-video-feature iframe#inlineSongPlayer{min-height:210px}}';
+  document.head.append(style);
+  list.querySelectorAll('.song-row').forEach(row=>{
+    const actions=row.querySelector('.song-actions');if(!actions)return;
+    actions.querySelectorAll('button.play-song').forEach(b=>b.remove());
+    const old=actions.querySelector('a[data-play-track]');
+    if(old){const b=document.createElement('button');b.type='button';b.className='song-action play-song';b.dataset.playTrack='';b.textContent='▶ play';b.setAttribute('aria-label','Play '+(row.querySelector('.song-title')?.textContent.trim()||'song')+' in this website');old.replaceWith(b)}
+  });
+  list.addEventListener('click',e=>{
+    const button=e.target.closest('button[data-play-track]');if(!button)return;e.preventDefault();
+    const row=button.closest('.song-row'),id=row?.dataset.song,title=row?.querySelector('.song-title')?.textContent.trim()||'Olivia Rodrigo';
+    const current=feature.querySelector('#inlineSongPlayer');if(!current)return;
+    let player;
+    if(id==='the-cure'){
+      player=document.createElement('video');player.controls=true;player.playsInline=true;player.preload='metadata';player.innerHTML='<source src="'+source+'" type="video/mp4">Your browser does not support video playback.';player.setAttribute('aria-label',title+' video');
+    }else{
+      const videoId=ids[id];if(!videoId)return;
+      player=document.createElement('iframe');player.title='Play '+title+' by Olivia Rodrigo';player.src='https://www.youtube-nocookie.com/embed/'+videoId+'?autoplay=1&rel=0';player.allow='autoplay; encrypted-media; picture-in-picture; fullscreen';player.allowFullscreen=true;player.referrerPolicy='strict-origin-when-cross-origin';
+    }
+    player.id='inlineSongPlayer';current.replaceWith(player);
+    feature.querySelector('#songVideoTitle').textContent='Now playing: '+title+' ✨';
+    feature.querySelector('p').textContent=id==='the-cure'?'Playing your supplied video right here in the songs area.':'Playing in the official YouTube player, right here in the songs area.';
+    if(id==='the-cure')player.play().catch(()=>{});
+    feature.scrollIntoView({behavior:'smooth',block:'center'});
+  });
+})();
