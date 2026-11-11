@@ -1,3 +1,4 @@
+
 (() => {
   const songs=[['drivers-license','drivers license','SOUR'],['deja-vu','deja vu','SOUR'],['good-4-u','good 4 u','SOUR'],['traitor','traitor','SOUR'],['brutal','brutal','SOUR'],['vampire','vampire','GUTS'],['bad-idea-right','bad idea right?','GUTS'],['get-him-back','get him back!','GUTS'],['making-the-bed','making the bed','GUTS'],['obsessed','obsessed','GUTS (spilled)'],['drop-dead','drop dead','you seem pretty sad...'],['the-cure','the cure','you seem pretty sad...'],['cigarette-smoke','cigarette smoke','you seem pretty sad...']];
   const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -24,4 +25,22 @@
   document.querySelector('#accountPlaylists').addEventListener('click',async e=>{const b=e.target.closest('[data-action="remove-track"]');if(!b||!user)return;const {error}=await sb.from('playlist_tracks').delete().eq('playlist_id',b.dataset.playlist).eq('song_id',b.dataset.id).eq('user_id',user.id);if(error){document.querySelector('#playlistHint').textContent=error.message;return}b.closest('.account-manage-item').remove()});
   document.querySelector('#accountFavorites').addEventListener('click',async e=>{const b=e.target.closest('[data-action="remove-favorite"]');if(!b||!user)return;const {error}=await sb.from('song_favorites').delete().eq('user_id',user.id).eq('song_id',b.dataset.id);if(error){document.querySelector('#playlistHint').textContent=error.message;return}await reloadLibrary()});
   const url=window.ORACLE_SUPABASE_URL,key=window.ORACLE_SUPABASE_ANON_KEY;if(url&&key&&window.supabase?.createClient){sb=window.supabase.createClient(url,key);sb.auth.getSession().then(({data})=>setUser(data.session?.user||null));sb.auth.onAuthStateChange((event,session)=>{if(event==='SIGNED_IN')setUser(session?.user||null,true);if(event==='SIGNED_OUT')setUser(null)})}
+})();
+
+(function(){
+  document.querySelectorAll(".song-row").forEach(row=>{
+    const title=row.querySelector(".song-title")?.textContent?.trim();
+    const actions=row.querySelector(".song-actions");
+    if(!title||!actions||actions.querySelector(".play-song"))return;
+    const play=document.createElement("button");
+    play.type="button";
+    play.className="song-action play-song";
+    play.textContent="▶ play ↗";
+    play.setAttribute("aria-label",`Play ${title} on YouTube Music`);
+    play.addEventListener("click",()=>{
+      const query=encodeURIComponent(`Olivia Rodrigo ${title} official audio`);
+      window.open(`https://music.youtube.com/search?q=${query}`,"_blank","noopener,noreferrer");
+    });
+    actions.prepend(play);
+  });
 })();
