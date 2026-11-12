@@ -1,5 +1,13 @@
 (() => {
   const context = () => window.getCommunityChatContext?.();
+  function isGiphyUrl(value) {
+    try {
+      const url = new URL(value);
+      return url.protocol === 'https:' && (url.hostname === 'giphy.com' || url.hostname.endsWith('.giphy.com'));
+    } catch {
+      return false;
+    }
+  }
   const imageAttachmentTypes = new Set(['image/jpeg', 'image/png', 'image/gif', 'image/webp']);
   const attachmentUrlCache = new Map();
   const attachmentUrlRequests = new Map();
