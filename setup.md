@@ -18,6 +18,10 @@ The address must match the final Pages URL. The site passes the current page URL
 
 The favorites and playlists schema is already applied. The three tables use row-level security so each signed-in user can access only their own songs and playlists.
 
+### Community group chat
+
+Apply `supabase/migrations/20261112000000_create_group_chat.sql` to the Supabase project in the SQL Editor before using the community chat. It creates a messages table readable only by signed-in users, restricts posting and deletion to the message owner, limits messages to 500 characters, enforces a short server-side send cooldown, and enables Realtime updates.
+
 For dependable email delivery to the public, configure a production SMTP sender in Supabase. The built-in sender has tight delivery limits. Supabase dashboard: `https://supabase.com/dashboard/project/mnufsicajrimkqiyxtlc`.
 
 ## Publish with GitHub Pages
