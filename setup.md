@@ -20,7 +20,7 @@ The favorites and playlists schema is already applied. The three tables use row-
 
 ### Community group chat
 
-Apply `supabase/migrations/20261112000000_create_group_chat.sql` to the Supabase project in the SQL Editor before using the community chat. It creates a messages table readable only by signed-in users, restricts posting and deletion to the message owner, limits messages to 500 characters, enforces a short server-side send cooldown, and enables Realtime updates.
+Apply the files in `supabase/migrations/` to the Supabase project in filename order. The chat migrations create a messages table readable only by signed-in users, restrict posting and deletion to the message owner, limit messages to 500 characters, enforce a short server-side send cooldown, enable Realtime updates, and keep chat author names in sync with each user's profile display name.
 
 For dependable email delivery to the public, configure a production SMTP sender in Supabase. The built-in sender has tight delivery limits. Supabase dashboard: `https://supabase.com/dashboard/project/mnufsicajrimkqiyxtlc`.
 
