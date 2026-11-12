@@ -342,6 +342,18 @@
         } catch {
           detail = detail.slice(0, 500);
         }
+        const requestId = [
+          'x-request-id',
+          'x-kong-request-id',
+          'x-supabase-request-id',
+          'cf-ray'
+        ].map(name => response.headers.get(name)).find(Boolean);
+        const metadata = [
+          response.headers.get('content-type') && `response type ${response.headers.get('content-type')}`,
+          response.headers.get('server') && `server ${response.headers.get('server')}`,
+          requestId && `request ID ${requestId}`
+        ].filter(Boolean).join(', ');
+        if (metadata) detail = `${detail} [${metadata}]`;
         const headers = new Headers(response.headers);
         headers.delete('Content-Length');
         headers.delete('Content-Encoding');
