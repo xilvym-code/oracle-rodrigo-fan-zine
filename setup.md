@@ -20,7 +20,7 @@ The favorites and playlists schema is already applied. The three tables use row-
 
 ### Community group chat
 
-Apply the files in `supabase/migrations/` to the Supabase project in filename order. The chat migrations create a group chat and private direct messages, add member-only last-active indicators, sync names and photos with profiles, and configure private file storage, likes, and Realtime updates. Direct messages are readable only by their participants. Group-chat attachments are limited to 10 MB and downloaded as files; GIF search uses GIPHY and displays its required attribution.
+Apply the files in `supabase/migrations/` to the Supabase project in filename order. The chat migrations create a group chat and private direct messages, add member-only last-active indicators and online/away/do-not-disturb/offline modes, sync names and photos with profiles, and configure private file storage, likes, and Realtime updates. Direct messages and their attachments are readable only by their participants. Group-chat and direct-message attachments are limited to 10 MB and downloaded as files; GIF search uses GIPHY and displays its required attribution.
 
 The GIPHY beta API key in `config.js` is a public browser key, rate-limited to 100 API calls per hour. GIF search displays the required GIPHY attribution.
 
