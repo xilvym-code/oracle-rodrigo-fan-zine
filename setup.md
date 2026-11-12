@@ -1,6 +1,6 @@
-# ORacle setup
+# Stellan Oli Oli setup
 
-ORacle is a fan-made Olivia Rodrigo site with an animated photo diary, album pages, live dates, favorites, and personal playlists. It is not affiliated with Olivia Rodrigo or her team.
+Stellan Oli Oli is a fan-made Olivia Rodrigo site with an animated photo diary, album pages, live dates, favorites, and personal playlists. It is not affiliated with Olivia Rodrigo or her team.
 
 ## Site files
 
@@ -20,7 +20,7 @@ The favorites and playlists schema is already applied. The three tables use row-
 
 ### Community group chat
 
-Apply the files in `supabase/migrations/` to the Supabase project in filename order. The chat migrations create a messages table readable only by signed-in users, restrict posting and deletion to the message owner, limit messages to 500 characters, enforce a short server-side send cooldown, enable Realtime updates, sync chat author names and photos with profiles, and configure private file storage and message likes. Chat file attachments are limited to supported image, video, and document types up to 10 MB.
+Apply the files in `supabase/migrations/` to the Supabase project in filename order. The chat migrations create a group chat and private direct messages, add member-only last-active indicators, sync names and photos with profiles, and configure private file storage, likes, and Realtime updates. Direct messages are readable only by their participants. Group-chat attachments are limited to 10 MB and downloaded as files; GIF search uses GIPHY and displays its required attribution.
 
 The GIPHY beta API key in `config.js` is a public browser key, rate-limited to 100 API calls per hour. GIF search displays the required GIPHY attribution.
 
