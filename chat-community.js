@@ -319,6 +319,45 @@
     console.error(prefix, error);
   };
 
+  const monitoredStorageClients = new WeakSet();
+  function exposeStorageErrorDetails(client) {
+    const storage = client?.storage;
+    if (!storage || monitoredStorageClients.has(storage)) return;
+    const originalFetch = storage.fetch;
+    if (typeof originalFetch !== 'function') return;
+    monitoredStorageClients.add(storage);
+    storage.fetch = async (...args) => {
+      const response = await originalFetch(...args);
+      const request = args[0];
+      const url = typeof request === 'string' ? request : request?.url || '';
+      if (response.ok || !url.includes('/storage/v1/object/community-chat-files/')) return response;
+      try {
+        const body = await response.clone().text();
+        let detail = body.trim();
+        try {
+          const parsed = JSON.parse(body);
+          detail = [parsed.message, parsed.error, parsed.error_description, parsed.details]
+            .filter(value => typeof value === 'string' && value.trim())
+            .join(' — ') || detail;
+        } catch {
+          detail = detail.slice(0, 500);
+        }
+        const headers = new Headers(response.headers);
+        headers.delete('Content-Length');
+        headers.delete('Content-Encoding');
+        headers.set('Content-Type', 'application/json');
+        return new Response(JSON.stringify({ message: detail || `Storage returned HTTP ${response.status} without details.` }), {
+          status: response.status,
+          statusText: response.statusText,
+          headers
+        });
+      } catch (error) {
+        console.error('Could not read the Storage upload error response.', error);
+        return response;
+      }
+    };
+  }
+
   function lastActiveText(timestamp) {
     if (!timestamp) return 'Last active unknown';
     const elapsed = Math.max(0, Date.now() - Date.parse(timestamp));
@@ -561,6 +600,7 @@
     user = nextUser;
     const app = context();
     supabase = app?.supabase || null;
+    exposeStorageErrorDetails(supabase);
     activePeerId = null;
     profiles.clear();
     presence.clear();
@@ -859,6 +899,7 @@
 
   const app = context();
   supabase = app?.supabase || null;
+  exposeStorageErrorDetails(supabase);
   if (!supabase) {
     peopleButton.title = 'Sign in to see community members.';
   } else {
