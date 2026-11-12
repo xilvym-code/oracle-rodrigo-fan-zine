@@ -1,5 +1,25 @@
 (() => {
   const context = () => window.getCommunityChatContext?.();
+  const imageAttachmentTypes = new Set(['image/jpeg', 'image/png', 'image/gif', 'image/webp']);
+  const attachmentUrlCache = new Map();
+  const attachmentUrlRequests = new Map();
+  async function getAttachmentUrl(path) {
+    const cached = attachmentUrlCache.get(path);
+    if (cached && cached.expiresAt > Date.now() + 60000) return cached.url;
+    let request = attachmentUrlRequests.get(path);
+    if (!request) {
+      request = context().supabase.storage.from('community-chat-files').createSignedUrl(path, 3600)
+        .then(({ data, error }) => {
+          if (error) throw error;
+          const entry = { url: data.signedUrl, expiresAt: Date.now() + 3540000 };
+          attachmentUrlCache.set(path, entry);
+          return entry.url;
+        })
+        .finally(() => attachmentUrlRequests.delete(path));
+      attachmentUrlRequests.set(path, request);
+    }
+    return request;
+  }
   const chatStatus = document.querySelector('#chatStatus');
   const chatList = document.querySelector('#chatMessages');
   const fileInput = document.querySelector('#chatFileInput');
@@ -56,6 +76,10 @@
     .chat-message-head { gap: 10px; }
     .chat-message-head time { margin-left: auto; }
     .chat-message-body { font-size: 13px; }
+    .chat-image-attachment { max-width: min(440px, 100%); margin: 10px 0 0; }
+    .chat-image-attachment a { display: block; line-height: 0; }
+    .chat-image-attachment img { display: block; width: auto; max-width: 100%; max-height: 420px; border: 1px solid #6e504222; border-radius: 12px; object-fit: contain; }
+    .chat-image-attachment figcaption { margin-top: 5px; font: 8px var(--mono); color: #756861; overflow-wrap: anywhere; }
     .chat-tools { gap: 9px; margin: 16px 0 12px; }
     .chat-tools .pill { min-height: 38px; border-radius: 999px; }
     .chat-compose textarea {
@@ -185,6 +209,10 @@
     .chat-dm-message.is-mine { align-self: flex-end; border-radius: 14px 14px 4px 14px; background: #f4bdc5; }
     .chat-dm-message p { margin: 0; white-space: pre-wrap; font: 12px/1.5 var(--sans); }
     .chat-dm-message .chat-attachment-link { display: block; color: inherit; }
+    .chat-dm-image-attachment { max-width: min(320px, 100%); margin: 7px 0 0; }
+    .chat-dm-image-attachment a { display: block; line-height: 0; }
+    .chat-dm-image-attachment img { display: block; width: auto; max-width: 100%; max-height: 320px; border: 1px solid #6e504222; border-radius: 10px; object-fit: contain; }
+    .chat-dm-image-attachment figcaption { margin-top: 4px; font: 8px var(--mono); color: #756861; overflow-wrap: anywhere; }
     .chat-dm-gif { display: block; max-width: min(250px, 100%); max-height: 220px; margin-top: 7px; object-fit: contain; }
     .chat-dm-message time { display: block; margin-top: 5px; text-align: right; font: 8px var(--mono); color: #756861; }
     .chat-dm-empty { display: grid; flex: 1; place-items: center; padding: 20px; text-align: center; font: 11px/1.6 var(--mono); color: #756861; }
@@ -532,12 +560,36 @@
       body.textContent = item.body;
       if (item.body) row.append(body);
       if (item.attachment_path) {
-        const attachment = document.createElement('a');
-        attachment.className = 'chat-attachment-link';
-        attachment.href = '#';
-        attachment.dataset.dmAttachment = item.attachment_path;
-        attachment.textContent = `download ${item.attachment_name || 'attachment'}`;
-        row.append(attachment);
+        if (imageAttachmentTypes.has(item.attachment_type)) {
+          const figure = document.createElement('figure');
+          figure.className = 'chat-dm-image-attachment';
+          const attachment = document.createElement('a');
+          attachment.href = '#';
+          attachment.dataset.dmAttachment = item.attachment_path;
+          attachment.dataset.dmImage = 'true';
+          const image = document.createElement('img');
+          image.alt = item.attachment_name || 'Image attachment';
+          image.loading = 'lazy';
+          image.decoding = 'async';
+          attachment.append(image);
+          figure.append(attachment);
+          const caption = document.createElement('figcaption');
+          caption.textContent = item.attachment_name || 'Image attachment';
+          figure.append(caption);
+          getAttachmentUrl(item.attachment_path).then(url => {
+            if (image.isConnected) image.src = url;
+          }).catch(error => {
+            if (image.isConnected) caption.textContent = `Could not load image preview: ${error.message || 'please try opening the image.'}`;
+          });
+          row.append(figure);
+        } else {
+          const attachment = document.createElement('a');
+          attachment.className = 'chat-attachment-link';
+          attachment.href = '#';
+          attachment.dataset.dmAttachment = item.attachment_path;
+          attachment.textContent = `download ${item.attachment_name || 'attachment'}`;
+          row.append(attachment);
+        }
       }
       if (item.gif_url && isGiphyUrl(item.gif_url)) {
         const gif = document.createElement('img');
@@ -720,15 +772,20 @@
       const popup = window.open('about:blank', '_blank');
       if (popup) popup.opener = null;
       try {
-        const { data, error } = await supabase.storage
-          .from('community-chat-files')
-          .createSignedUrl(attachment.dataset.dmAttachment, 3600, { download: true });
-        if (error) throw error;
-        if (popup) popup.location.href = data.signedUrl;
-        else window.location.href = data.signedUrl;
+        const url = attachment.dataset.dmImage === 'true'
+          ? await getAttachmentUrl(attachment.dataset.dmAttachment)
+          : await supabase.storage.from('community-chat-files')
+            .createSignedUrl(attachment.dataset.dmAttachment, 3600, { download: true })
+            .then(({ data, error }) => {
+              if (error) throw error;
+              return data.signedUrl;
+            });
+        if (popup) popup.location.href = url;
+        else window.location.href = url;
       } catch (error) {
         popup?.close();
-        dmStatus.textContent = `Could not download the attachment: ${error.message || 'please try again.'}`;
+        const action = attachment.dataset.dmImage === 'true' ? 'open the image' : 'download the attachment';
+        dmStatus.textContent = `Could not ${action}: ${error.message || 'please try again.'}`;
       }
       return;
     }

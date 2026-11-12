@@ -25,7 +25,7 @@
 <section class="section gallery" id="photos"><div class="section-head reveal"><div><div class="label">little moments, big feelings</div><h2>The photo<br><em>diary.</em></h2></div><div class="section-note">A few frames from<br>the world around the music.</div></div><div class="gallery-grid"><figure class="photo reveal"><img src="https://cdn.prod.website-files.com/69fd286c60760ba80faff294/6a324ffea26132c6a9a73c4c_Static_LNPR-Newsroom_1350x1000_OliviaRodrigo_2026_National.jpeg" alt="Olivia Rodrigo portrait from The Unraveled Tour press gallery"><figcaption>the unraveled · 2026</figcaption></figure><figure class="photo reveal delay"><img src="https://cdn.prod.website-files.com/69fd286c60760ba80faff294/6a324ffea26132c6a9a73c49_Static_LNPR-Newsroom_1720x720_OliviaRodrigo_2026_National.jpeg" alt="Olivia Rodrigo in a live music portrait"><figcaption>on the road again</figcaption></figure><figure class="photo reveal"><img src="https://cdn.prod.website-files.com/69fd286c60760ba80faff294/6a324ffea26132c6a9a73c4c_Static_LNPR-Newsroom_1350x1000_OliviaRodrigo_2026_National.jpeg" alt="Olivia Rodrigo in a 2026 promotional portrait"><figcaption>the girl in the song</figcaption></figure></div></section>
 <section class="section events" id="events"><div class="section-head reveal"><div><div class="label">the unraveled tour · 2026/27</div><h2>See you<br><em>out there.</em></h2></div><div class="section-note">The next nights to<br>sing every word.</div></div><div class="event-list"><a class="event-row reveal" href="https://www.ticketmaster.com/olivia-rodrigo-tickets/artist/2836194" target="_blank" rel="noreferrer"><span class="event-date">NOV<br>12 · 2026</span><span class="event-city">Atlanta, GA</span><span class="event-venue">State Farm Arena</span><span class="ticket">tickets ↗</span></a><a class="event-row reveal" href="https://www.ticketmaster.com/olivia-rodrigo-tickets/artist/2836194" target="_blank" rel="noreferrer"><span class="event-date">NOV<br>15 · 2026</span><span class="event-city">Orlando, FL</span><span class="event-venue">Kia Center</span><span class="ticket">tickets ↗</span></a><a class="event-row reveal" href="https://www.ticketmaster.com/olivia-rodrigo-tickets/artist/2836194" target="_blank" rel="noreferrer"><span class="event-date">NOV<br>19 · 2026</span><span class="event-city">Sunrise, FL</span><span class="event-venue">Amerant Bank Arena</span><span class="ticket">tickets ↗</span></a><a class="event-row reveal" href="https://www.ticketmaster.com/olivia-rodrigo-tickets/artist/2836194" target="_blank" rel="noreferrer"><span class="event-date">NOV<br>23 · 2026</span><span class="event-city">Nashville, TN</span><span class="event-venue">Bridgestone Arena</span><span class="ticket">tickets ↗</span></a><a class="event-row reveal" href="https://www.ticketmaster.com/olivia-rodrigo-tickets/artist/2836194" target="_blank" rel="noreferrer"><span class="event-date">DEC<br>01 · 2026</span><span class="event-city">Vancouver, BC</span><span class="event-venue">Rogers Arena</span><span class="ticket">tickets ↗</span></a></div><p class="events-source">Dates from <a href="https://news.livenationentertainment.com/news/olivia-rodrigo-announces-the-unraveled-tour-spanning-60-dates-across-north-america-europe-and-the-uk" target="_blank" rel="noreferrer">Live Nation · full dates &amp; details ↗</a></p></section>
 <section class="note reveal"><div class="label">a note to the fans</div><blockquote>“Some days you just need to scream the bridge with <span>your whole heart.</span>”</blockquote><p>made with <span class="heart">♥</span> and a little bit of glitter</p></section></main><footer class="footer"><a href="#home">Stellan Oli Oli · a fan-made love letter</a><span>not affiliated · all love</span><a href="#home">back to top ↑</a></footer>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./config.js"></script><script src="./chat-community.js?v=upload-diagnostic-2" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./config.js"></script><script src="./chat-community.js?v=inline-images-1" defer></script>
 <script>
 const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}}),{threshold:.12});document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 const details={SOUR:'The debut that made a whole generation put their feelings in the passenger seat. Start with “drivers license” and stay for the bridge.',GUTS:'A louder, sharper chapter that lets the messy parts take up space. Try “vampire”, “bad idea right?” and “get him back!”.','you seem pretty sad for a girl so in love':'A 2026 love letter with a complicated pulse. Featuring “drop dead”, “the cure” and “cigarette smoke”.'};const detail=document.querySelector('#albumDetail');document.querySelectorAll('.album-card').forEach(card=>card.addEventListener('click',()=>{const name=card.dataset.album;document.querySelector('#detailTitle').textContent=name;document.querySelector('#detailText').textContent=details[name];detail.classList.add('show');detail.scrollIntoView({behavior:'smooth',block:'nearest'})}));document.querySelector('.close-detail').addEventListener('click',()=>detail.classList.remove('show'));
@@ -62,7 +62,7 @@ const details={SOUR:'The debut that made a whole generation put their feelings i
   songList.insertAdjacentHTML('beforebegin','<div class="favorites-wrap"><div class="label">your favorites</div><div id="favoriteList" class="favorites-list"></div><p class="favorite-empty" id="favoriteEmpty">Sign in and tap a heart to keep your favorite songs here.</p></div>');
   document.querySelector('.playlist-area').insertAdjacentHTML('beforeend','<form id="playlistForm" class="playlist-create" hidden><input type="text" id="playlistName" maxlength="60" required placeholder="name your playlist" aria-label="Playlist name"><button class="pill" type="submit">save ↗</button></form>');
   let mode='signin', currentUser=null, favorites=new Set(), playlists=[], deferredAction=null, supabase=null, chatChannel=null, chatUserId=null, chatReady=false, chatRealtimeUnavailable=false, selectedChatFile=null, selectedChatGif=null;
-  const chatById=new Map(), chatProfiles=new Map(), chatReactions=new Map(), gifChoices=new Map();
+  const chatById=new Map(), chatProfiles=new Map(), chatReactions=new Map(), gifChoices=new Map(), chatAttachmentUrls=new Map(), chatAttachmentRequests=new Map();
   songList.innerHTML=songs.map(([id,title,album],i)=>`<div class="song-row" data-song="${id}"><span class="song-number">${String(i+1).padStart(2,'0')}</span><div><span class="song-title">${title}</span><span class="song-album">${album}</span></div><div class="song-actions"><button class="song-action fav-btn" type="button" aria-label="Save ${title} as a favorite">♡ favorite</button><button class="song-action add-list" type="button">＋ playlist</button><select class="playlist-picker" aria-label="Add ${title} to a playlist" hidden><option value="">choose playlist</option></select></div></div>`).join('');
   function showModal(nextAction=null){deferredAction=nextAction;modal.classList.add('open');message.textContent='';document.querySelector('#authEmail').focus()}
   function setMode(next){mode=next;modeButtons.forEach(b=>{b.classList.toggle('active',b.dataset.mode===mode);b.hidden=mode==='reset'});document.querySelector('#authTitle').innerHTML=mode==='signup'?'Join the<br><em>fan club.</em>':mode==='reset'?'Choose a<br><em>new password.</em>':'Save your<br><em>soundtrack.</em>';document.querySelector('.auth-submit').textContent=mode==='signup'?'create account ↗':mode==='reset'?'save new password ↗':'sign in ↗';const password=document.querySelector('#authPassword');password.autocomplete=mode==='signup'||mode==='reset'?'new-password':'current-password';password.placeholder=mode==='reset'?'enter your new password':'at least 8 characters';forgotPassword.style.display=mode==='signin'?'inline-block':'none';document.querySelector('#resendConfirm').style.display=mode==='signup'?'inline-block':'none';message.textContent=''}
@@ -70,9 +70,122 @@ const details={SOUR:'The debut that made a whole generation put their feelings i
   async function refreshSaved(){if(!supabase||!currentUser)return;const [f,p]=await Promise.all([supabase.from('song_favorites').select('song_id').eq('user_id',currentUser.id),supabase.from('playlists').select('id,name').eq('user_id',currentUser.id).order('created_at')]);if(!f.error)favorites=new Set(f.data.map(x=>x.song_id));if(!p.error)playlists=p.data;document.querySelector('#favoriteList').innerHTML=[...favorites].map(id=>{const s=songs.find(x=>x[0]===id);return s?`<span class="favorite-chip">♥ ${s[1]}</span>`:''}).join('');document.querySelector('#favoriteEmpty').hidden=favorites.size>0;playlistList.innerHTML=playlists.map(x=>`<span class="playlist-chip">${x.name.replaceAll('<','&lt;')}</span>`).join('');document.querySelector('#playlistHint').textContent=playlists.length?`${playlists.length} playlist${playlists.length===1?'':'s'} saved to your account.`:'Create a playlist and add songs to it.';syncButtons()}
   const allowedChatFileTypes=new Set(['image/jpeg','image/png','image/gif','image/webp','video/mp4','application/pdf','text/plain','text/csv','application/zip','application/rtf','application/msword','application/vnd.ms-excel','application/vnd.ms-powerpoint','application/vnd.openxmlformats-officedocument.wordprocessingml.document','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','application/vnd.openxmlformats-officedocument.presentationml.presentation']);
   function isGiphyUrl(value){try{const url=new URL(value);return url.protocol==='https:'&&(url.hostname==='giphy.com'||url.hostname.endsWith('.giphy.com'))}catch{return false}}
+  async function getChatAttachmentUrl(path){const cached=chatAttachmentUrls.get(path);if(cached&&cached.expiresAt>Date.now()+60000)return cached.url;let request=chatAttachmentRequests.get(path);if(!request){request=supabase.storage.from('community-chat-files').createSignedUrl(path,3600).then(({data,error})=>{if(error)throw error;const entry={url:data.signedUrl,expiresAt:Date.now()+3540000};chatAttachmentUrls.set(path,entry);return entry.url}).finally(()=>chatAttachmentRequests.delete(path));chatAttachmentRequests.set(path,request)}return request}
   async function loadChatProfiles(userIds){const ids=[...new Set(userIds)].filter(id=>id&&!chatProfiles.has(id));if(!ids.length)return null;const {data,error}=await supabase.from('community_profiles').select('user_id,display_name,avatar_url').in('user_id',ids);if(error)return error;data.forEach(profile=>chatProfiles.set(profile.user_id,profile));return null}
   async function loadChatReactions(messageIds){const ids=messageIds.map(Number);if(!ids.length)return null;const {data,error}=await supabase.from('chat_message_reactions').select('message_id,user_id,reaction').in('message_id',ids);if(error)return error;data.forEach(reaction=>{const id=String(reaction.message_id),items=chatReactions.get(id)||[];items.push(reaction);chatReactions.set(id,items)});return null}
-  function renderGroupChat(){const items=[...chatById.values()].sort((a,b)=>Date.parse(a.created_at)-Date.parse(b.created_at)).slice(-100);chatById.clear();items.forEach(item=>chatById.set(String(item.id),item));chatList.replaceChildren(...items.map(item=>{const row=document.createElement('li');row.className='chat-message';row.dataset.messageId=String(item.id);const heading=document.createElement('div');heading.className='chat-message-head';const profile=chatProfiles.get(item.user_id),displayName=profile?.display_name||item.display_name||'Fan';const author=document.createElement('button');author.type='button';author.className='chat-message-author';author.dataset.profileUser=item.user_id;const avatarUrl=profile?.avatar_url;if(typeof avatarUrl==='string'&&avatarUrl.startsWith('data:image/jpeg;base64,')){const avatar=document.createElement('img');avatar.className='chat-avatar';avatar.src=avatarUrl;avatar.alt='';author.append(avatar)}else{const fallback=document.createElement('span');fallback.className='chat-avatar-fallback';fallback.textContent=displayName.slice(0,1).toUpperCase();author.append(fallback)}const name=document.createElement('strong');name.textContent=displayName;author.append(name);const time=document.createElement('time');time.dateTime=item.created_at;time.textContent=new Date(item.created_at).toLocaleString();heading.append(author,time);const actions=document.createElement('div');actions.className='chat-message-actions';const reactions=chatReactions.get(String(item.id))||[],liked=Boolean(currentUser&&reactions.some(reaction=>reaction.user_id===currentUser.id));const like=document.createElement('button');like.type='button';like.className='chat-reaction-button';like.dataset.likeMessage=String(item.id);like.setAttribute('aria-pressed',String(liked));like.setAttribute('aria-label',`${liked?'Unlike':'Like'} message; ${reactions.length} likes`);like.textContent=`${liked?'♥':'♡'} ${reactions.length||'like'}`;actions.append(like);if(currentUser&&item.user_id===currentUser.id){const remove=document.createElement('button');remove.type='button';remove.className='chat-delete';remove.dataset.deleteMessage=String(item.id);remove.textContent='delete';remove.setAttribute('aria-label','Delete your message');actions.append(remove)}heading.append(actions);row.append(heading);if(item.body){const body=document.createElement('p');body.className='chat-message-body';body.textContent=item.body;row.append(body)}if(item.attachment_path){const attachment=document.createElement('a');attachment.className='chat-attachment-link';attachment.href='#';attachment.dataset.chatAttachment=item.attachment_path;attachment.textContent=`download ${item.attachment_name||'attachment'}`;row.append(attachment)}if(item.gif_url&&isGiphyUrl(item.gif_url)){const frame=document.createElement('div');frame.className='chat-gif-frame';const gif=document.createElement('img');gif.src=item.gif_url;gif.alt='GIF shared from GIPHY';gif.loading='lazy';frame.append(gif);const credit=document.createElement('small');credit.textContent='Powered by GIPHY';frame.append(credit);row.append(frame)}return row}));chatEmpty.textContent='No messages yet. Start the conversation!';chatEmpty.hidden=items.length>0}
+  function renderGroupChat(){
+    const items=[...chatById.values()].sort((a,b)=>Date.parse(a.created_at)-Date.parse(b.created_at)).slice(-100);
+    chatById.clear();
+    items.forEach(item=>chatById.set(String(item.id),item));
+    chatList.replaceChildren(...items.map(item=>{
+      const row=document.createElement('li');
+      row.className='chat-message';
+      row.dataset.messageId=String(item.id);
+      const heading=document.createElement('div');
+      heading.className='chat-message-head';
+      const profile=chatProfiles.get(item.user_id),displayName=profile?.display_name||item.display_name||'Fan';
+      const author=document.createElement('button');
+      author.type='button';
+      author.className='chat-message-author';
+      author.dataset.profileUser=item.user_id;
+      const avatarUrl=profile?.avatar_url;
+      if(typeof avatarUrl==='string'&&avatarUrl.startsWith('data:image/jpeg;base64,')){
+        const avatar=document.createElement('img');
+        avatar.className='chat-avatar';
+        avatar.src=avatarUrl;
+        avatar.alt='';
+        author.append(avatar);
+      }else{
+        const fallback=document.createElement('span');
+        fallback.className='chat-avatar-fallback';
+        fallback.textContent=displayName.slice(0,1).toUpperCase();
+        author.append(fallback);
+      }
+      const name=document.createElement('strong');
+      name.textContent=displayName;
+      author.append(name);
+      const time=document.createElement('time');
+      time.dateTime=item.created_at;
+      time.textContent=new Date(item.created_at).toLocaleString();
+      heading.append(author,time);
+      const actions=document.createElement('div');
+      actions.className='chat-message-actions';
+      const reactions=chatReactions.get(String(item.id))||[],liked=Boolean(currentUser&&reactions.some(reaction=>reaction.user_id===currentUser.id));
+      const like=document.createElement('button');
+      like.type='button';
+      like.className='chat-reaction-button';
+      like.dataset.likeMessage=String(item.id);
+      like.setAttribute('aria-pressed',String(liked));
+      like.setAttribute('aria-label',`${liked?'Unlike':'Like'} message; ${reactions.length} likes`);
+      like.textContent=`${liked?'♥':'♡'} ${reactions.length||'like'}`;
+      actions.append(like);
+      if(currentUser&&item.user_id===currentUser.id){
+        const remove=document.createElement('button');
+        remove.type='button';
+        remove.className='chat-delete';
+        remove.dataset.deleteMessage=String(item.id);
+        remove.textContent='delete';
+        remove.setAttribute('aria-label','Delete your message');
+        actions.append(remove);
+      }
+      heading.append(actions);
+      row.append(heading);
+      if(item.body){
+        const body=document.createElement('p');
+        body.className='chat-message-body';
+        body.textContent=item.body;
+        row.append(body);
+      }
+      if(item.attachment_path){
+        if(item.attachment_type?.startsWith('image/')&&allowedChatFileTypes.has(item.attachment_type)){
+          const figure=document.createElement('figure');
+          figure.className='chat-image-attachment';
+          const attachment=document.createElement('a');
+          attachment.href='#';
+          attachment.dataset.chatAttachment=item.attachment_path;
+          attachment.dataset.chatImage='true';
+          const image=document.createElement('img');
+          image.alt=item.attachment_name||'Image attachment';
+          image.loading='lazy';
+          image.decoding='async';
+          attachment.append(image);
+          figure.append(attachment);
+          const caption=document.createElement('figcaption');
+          caption.textContent=item.attachment_name||'Image attachment';
+          figure.append(caption);
+          getChatAttachmentUrl(item.attachment_path).then(url=>{
+            if(image.isConnected)image.src=url;
+          }).catch(error=>{
+            if(image.isConnected)caption.textContent=`Could not load image preview: ${error.message||'please try opening the image.'}`;
+          });
+          row.append(figure);
+        }else{
+          const attachment=document.createElement('a');
+          attachment.className='chat-attachment-link';
+          attachment.href='#';
+          attachment.dataset.chatAttachment=item.attachment_path;
+          attachment.textContent=`download ${item.attachment_name||'attachment'}`;
+          row.append(attachment);
+        }
+      }
+      if(item.gif_url&&isGiphyUrl(item.gif_url)){
+        const frame=document.createElement('div');
+        frame.className='chat-gif-frame';
+        const gif=document.createElement('img');
+        gif.src=item.gif_url;
+        gif.alt='GIF shared from GIPHY';
+        gif.loading='lazy';
+        frame.append(gif);
+        const credit=document.createElement('small');
+        credit.textContent='Powered by GIPHY';
+        frame.append(credit);
+        row.append(frame);
+      }
+      return row;
+    }));
+    chatEmpty.textContent='No messages yet. Start the conversation!';
+    chatEmpty.hidden=items.length>0;
+  }
   async function loadGroupChat(){if(!currentUser||!supabase)return;const loadingUserId=currentUser.id;chatStatus.textContent='Loading the conversation…';chatEmpty.textContent='Loading messages…';chatEmpty.hidden=false;chatInput.disabled=true;chatSend.disabled=true;const {data,error}=await supabase.from('chat_messages').select('id,user_id,display_name,body,created_at,attachment_path,attachment_name,attachment_type,attachment_size,gif_id,gif_url').order('created_at',{ascending:false}).limit(100);if(chatUserId!==loadingUserId)return;if(error){chatStatus.textContent=`Could not load the group chat: ${error.message}`;chatEmpty.textContent='Messages could not load.';return}data.forEach(item=>chatById.set(String(item.id),item));const profileError=await loadChatProfiles(data.map(item=>item.user_id)),reactionError=await loadChatReactions(data.map(item=>item.id));renderGroupChat();chatReady=true;const warnings=[profileError&&`Profile photos unavailable: ${profileError.message}`,reactionError&&`Likes unavailable: ${reactionError.message}`].filter(Boolean);chatStatus.textContent=warnings.length?warnings.join(' '):chatRealtimeUnavailable?'Chat loaded, but live updates are unavailable. Refresh to reconnect.':'You’re in the fan group chat.';chatInput.disabled=false;chatSend.disabled=false}
   function openChatProfile(userId){const profile=chatProfiles.get(userId),message=[...chatById.values()].find(item=>item.user_id===userId),name=profile?.display_name||message?.display_name||'Fan';chatProfileName.textContent=name;const avatarUrl=profile?.avatar_url;if(typeof avatarUrl==='string'&&avatarUrl.startsWith('data:image/jpeg;base64,')){chatProfileImage.src=avatarUrl;chatProfileImage.hidden=false}else{chatProfileImage.removeAttribute('src');chatProfileImage.hidden=true}chatProfileDialog.showModal()}
   function stopGroupChat(){if(chatChannel&&supabase)supabase.removeChannel(chatChannel);chatChannel=null;chatUserId=null;chatReady=false;chatRealtimeUnavailable=false;chatById.clear();chatProfiles.clear();chatReactions.clear();renderGroupChat();chatEmpty.textContent='Sign in to see messages.';chatEmpty.hidden=false;chatInput.disabled=true;chatSend.disabled=true;chatAttachButton.disabled=true;chatGifButton.disabled=true;chatGifPicker.hidden=true;chatProfileDialog.close();selectedChatFile=null;selectedChatGif=null;chatFileInput.value='';chatFileName.textContent='';chatStatus.textContent='Sign in to read and join the conversation.'}
@@ -85,6 +198,22 @@ const details={SOUR:'The debut that made a whole generation put their feelings i
   document.querySelector('#chatProfileClose').addEventListener('click',()=>chatProfileDialog.close());
   chatForm.addEventListener('submit',async event=>{event.preventDefault();const body=chatInput.value.trim(),file=selectedChatFile,gif=selectedChatGif;if(!currentUser||!chatReady||(!body&&!file&&!gif))return;if(file&&gif){chatStatus.textContent='Send a file or a GIF, not both in one message.';return}chatSend.disabled=true;chatAttachButton.disabled=true;chatGifButton.disabled=true;chatStatus.textContent='Sending…';let attachmentPath=null,attachmentUploaded=false;try{const displayName=String(currentUser.user_metadata?.display_name||`Fan ${currentUser.id.slice(0,6)}`).trim().slice(0,40)||`Fan ${currentUser.id.slice(0,6)}`,messageRow={user_id:currentUser.id,display_name:displayName,body};if(file){const attachmentType=allowedChatFileTypes.has(file.type)?file.type:'application/octet-stream',candidatePath=`${currentUser.id}/${crypto.randomUUID()}`,{error:uploadError}=await supabase.storage.from('community-chat-files').upload(candidatePath,file,{contentType:attachmentType,upsert:false});if(uploadError)throw new Error(`Storage upload failed${uploadError.statusCode?` (HTTP ${uploadError.statusCode})`:''}: ${uploadError.message||'check the file type and size.'}`);attachmentPath=candidatePath;attachmentUploaded=true;Object.assign(messageRow,{attachment_path:attachmentPath,attachment_name:file.name.slice(0,255),attachment_type:attachmentType,attachment_size:file.size})}if(gif)Object.assign(messageRow,{gif_id:gif.id,gif_url:gif.url});const {data,error}=await supabase.from('chat_messages').insert(messageRow).select('id,user_id,display_name,body,created_at,attachment_path,attachment_name,attachment_type,attachment_size,gif_id,gif_url').single();if(error)throw error;chatInput.value='';selectedChatFile=null;selectedChatGif=null;chatFileInput.value='';chatFileName.textContent='';chatById.set(String(data.id),data);renderGroupChat();chatStatus.textContent='Message sent.'}catch(error){let cleanupMessage='';if(attachmentUploaded&&attachmentPath){const {error:cleanupError}=await supabase.storage.from('community-chat-files').remove([attachmentPath]);if(cleanupError){cleanupMessage=` The file was uploaded, but automatic cleanup also failed: ${cleanupError.message}`;console.error('Could not clean up an uploaded group-chat file.',cleanupError)}}chatStatus.textContent=`Could not send your message: ${error.message||'please try again.'}${cleanupMessage}`}finally{chatSend.disabled=!currentUser||!chatReady;chatAttachButton.disabled=!currentUser||!chatReady;chatGifButton.disabled=!currentUser||!chatReady}});
   chatList.addEventListener('click',async event=>{const author=event.target.closest('button[data-profile-user]');if(author){openChatProfile(author.dataset.profileUser);return}const like=event.target.closest('button[data-like-message]');if(like&&currentUser){const id=like.dataset.likeMessage,reactions=chatReactions.get(id)||[],liked=reactions.some(reaction=>reaction.user_id===currentUser.id);like.disabled=true;try{if(liked){const {error}=await supabase.from('chat_message_reactions').delete().eq('message_id',id).eq('user_id',currentUser.id);if(error)throw error;chatReactions.set(id,reactions.filter(reaction=>reaction.user_id!==currentUser.id))}else{const {data,error}=await supabase.from('chat_message_reactions').insert({message_id:Number(id),user_id:currentUser.id,reaction:'like'}).select('message_id,user_id,reaction').single();if(error)throw error;chatReactions.set(id,[...reactions,data])}renderGroupChat()}catch(error){chatStatus.textContent=`Could not update the like: ${error.message||'please try again.'}`}return}const attachment=event.target.closest('a[data-chat-attachment]');if(attachment){event.preventDefault();const popup=window.open('about:blank','_blank');if(popup)popup.opener=null;try{const {data,error}=await supabase.storage.from('community-chat-files').createSignedUrl(attachment.dataset.chatAttachment,3600);if(error)throw error;if(popup)popup.location.href=data.signedUrl;else window.location.href=data.signedUrl}catch(error){popup?.close();chatStatus.textContent=`Could not open the attachment: ${error.message||'please try again.'}`}return}const remove=event.target.closest('button[data-delete-message]');if(!remove||!currentUser)return;const id=remove.dataset.deleteMessage,item=chatById.get(id);remove.disabled=true;try{const {error}=await supabase.from('chat_messages').delete().eq('id',id).eq('user_id',currentUser.id);if(error)throw error;chatById.delete(id);chatReactions.delete(id);if(item?.attachment_path){const {error:storageError}=await supabase.storage.from('community-chat-files').remove([item.attachment_path]);if(storageError)chatStatus.textContent=`Message deleted, but its file could not be removed: ${storageError.message}`;else chatStatus.textContent='Message deleted.'}else chatStatus.textContent='Message deleted.';renderGroupChat()}catch(error){remove.disabled=false;chatStatus.textContent=`Could not delete the message: ${error.message||'please try again.'}`}});
+  chatList.addEventListener('click',async event=>{
+    const attachment=event.target.closest('a[data-chat-image]');
+    if(!attachment)return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    const popup=window.open('about:blank','_blank');
+    if(popup)popup.opener=null;
+    try{
+      const url=await getChatAttachmentUrl(attachment.dataset.chatAttachment);
+      if(popup)popup.location.href=url;
+      else window.location.href=url;
+    }catch(error){
+      popup?.close();
+      chatStatus.textContent=`Could not open the image: ${error.message||'please try again.'}`;
+    }
+  },true);
   function setAccount(user){currentUser=user||null;const b=document.querySelector('#accountButton');b.textContent=currentUser?'my space ↗':'sign in / join ↗';if(currentUser){refreshSaved();startGroupChat();if(deferredAction){const action=deferredAction;deferredAction=null;setTimeout(()=>action(),50)}}else{stopGroupChat();favorites.clear();playlists=[];playlistList.innerHTML='';document.querySelector('#favoriteList').innerHTML='';document.querySelector('#favoriteEmpty').hidden=false;syncButtons()}}
   document.querySelector('.event-list').addEventListener('click',event=>{const link=event.target.closest('a.event-row');if(!link||!currentUser)return;try{const key=`oracle-ticket-clicks:${currentUser.id}`,clicks=JSON.parse(localStorage.getItem(key)||'[]');if(!Array.isArray(clicks))throw new Error('Stored ticket activity is not a list.');clicks.unshift({city:link.querySelector('.event-city')?.textContent.trim()||'Unknown event',date:link.querySelector('.event-date')?.innerText.replace(/\s+/g,' ').trim()||'',venue:link.querySelector('.event-venue')?.textContent.trim()||'',clickedAt:new Date().toISOString()});localStorage.setItem(key,JSON.stringify(clicks.slice(0,20)));document.dispatchEvent(new CustomEvent('oracle-ticket-clicks-updated',{detail:{userId:currentUser.id}}))}catch(error){console.error('Could not save Ticketmaster click activity in this browser.',error)}});
   document.querySelector('#accountButton').addEventListener('click',async()=>{if(currentUser&&supabase){await supabase.auth.signOut();setAccount(null)}else showModal()});document.querySelectorAll('.auth-close').forEach(b=>b.onclick=()=>modal.classList.remove('open'));modal.addEventListener('click',e=>{if(e.target===modal)modal.classList.remove('open')});modeButtons.forEach(b=>b.onclick=()=>setMode(b.dataset.mode));setMode('signin');
