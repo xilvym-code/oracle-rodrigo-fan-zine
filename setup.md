@@ -20,7 +20,9 @@ The favorites and playlists schema is already applied. The three tables use row-
 
 ### Community group chat
 
-Apply the files in `supabase/migrations/` to the Supabase project in filename order. The chat migrations create a messages table readable only by signed-in users, restrict posting and deletion to the message owner, limit messages to 500 characters, enforce a short server-side send cooldown, enable Realtime updates, and keep chat author names in sync with each user's profile display name.
+Apply the files in `supabase/migrations/` to the Supabase project in filename order. The chat migrations create a messages table readable only by signed-in users, restrict posting and deletion to the message owner, limit messages to 500 characters, enforce a short server-side send cooldown, enable Realtime updates, sync chat author names and photos with profiles, and configure private file storage and message likes. Chat file attachments are limited to supported image, video, and document types up to 10 MB.
+
+The GIPHY beta API key in `config.js` is a public browser key, rate-limited to 100 API calls per hour. GIF search displays the required GIPHY attribution.
 
 For dependable email delivery to the public, configure a production SMTP sender in Supabase. The built-in sender has tight delivery limits. Supabase dashboard: `https://supabase.com/dashboard/project/mnufsicajrimkqiyxtlc`.
 

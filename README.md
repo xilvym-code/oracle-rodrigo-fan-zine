@@ -1,6 +1,6 @@
 # ORacle · Olivia Rodrigo fan zine
 
-A fan-made, animated photo diary and album guide with live dates, email-verified accounts, saved favorites, personal playlists, and a members-only group chat.
+A fan-made, animated photo diary and album guide with live dates, email-verified accounts, saved favorites, personal playlists, and a members-only group chat with profile photos, likes, file attachments, and GIF search.
 
 **This is an unofficial fan project and is not affiliated with Olivia Rodrigo or her team.**
 
